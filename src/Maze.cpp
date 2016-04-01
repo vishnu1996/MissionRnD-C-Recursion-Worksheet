@@ -35,8 +35,24 @@ more parameters .
 
 #include<stdlib.h>
 
-
 int path_exists(int *maze, int rows, int columns, int x1, int y1, int x2, int y2)
 {
-	return 1;
+	if (x1 < rows && y1 < columns)
+	{
+		if (x2 == x1&&y2 == y1)
+			return 1;
+		else if (columns>1 && * (maze + (x1*columns) + (y1 + 1)) == 1)
+		{
+			return path_exists(maze, rows, columns, x1, y1 + 1, x2, y2);
+		}
+		else if (*(maze + ((x1 + 1)*columns) + y1) == 1)
+		{
+			return path_exists(maze, rows, columns, x1 + 1, y1, x2, y2);
+		}
+		else if (columns > 1 && *(maze + ((x1 - 1)*columns) + y1) == 1)
+		{
+			return path_exists(maze, rows, columns, x1 - 1, y1, x2, y2);
+		}
+	}
+	return 0;	
 }
